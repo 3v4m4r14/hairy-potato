@@ -24,16 +24,17 @@ const SYMBOL_VALUES = {
 };
 
 const MIN_BET = 10;
-const MAX_BET = 50;
+const MAX_BET = 100;
 const GRID_WIDTH = 5;
 const GRID_HEIGHT = 4;
 
 const checkWin = (reels, betAmount) => {
   let totalWin = 0;
+  const winningPositions = new Set();
 
   // Check for Hedgehog Jackpot patterns
-  const hedgehogCount = reels.filter(symbol => symbol === '🦔').length;
-  if (hedgehogCount >= 3) {
+  const hedgehogPositions = reels.map((symbol, index) => symbol === '🦔' ? index : -1).filter(pos => pos !== -1);
+  if (hedgehogPositions.length >= 3) {
     // Adjusted jackpot multipliers
     const jackpotMultiplier = {
       3: 8,     // was 15
@@ -42,8 +43,9 @@ const checkWin = (reels, betAmount) => {
       6: 150,   // was 250
       7: 500    // was 1000
     };
-    const multiplier = jackpotMultiplier[Math.min(7, hedgehogCount)] || 1000;
+    const multiplier = jackpotMultiplier[Math.min(7, hedgehogPositions.length)] || 1000;
     totalWin += betAmount * multiplier;
+    hedgehogPositions.forEach(pos => winningPositions.add(pos));
   }
 
   // Check horizontal lines
@@ -51,13 +53,16 @@ const checkWin = (reels, betAmount) => {
     const rowStart = row * GRID_WIDTH;
     const rowSymbols = reels.slice(rowStart, rowStart + GRID_WIDTH);
     
-    // Check 5 in a row (now harder to get)
+    // Check 5 in a row
     if (rowSymbols.every(symbol => symbol === rowSymbols[0])) {
-      const multiplier = rowSymbols[0] === '🦔' ? 15 :  // was 25
-                        rowSymbols[0] === '🏍️' ? 8 :   // was 10
-                        rowSymbols[0] === '🏆' ? 5 :    // was 8
-                        3;                               // was 5
+      const multiplier = rowSymbols[0] === '🦔' ? 15 :
+                        rowSymbols[0] === '🏍️' ? 8 :
+                        rowSymbols[0] === '🏆' ? 5 :
+                        3;
       totalWin += betAmount * multiplier;
+      for (let i = 0; i < GRID_WIDTH; i++) {
+        winningPositions.add(rowStart + i);
+      }
       continue;
     }
     
@@ -65,25 +70,32 @@ const checkWin = (reels, betAmount) => {
     for (let i = 0; i <= 1; i++) {
       const fourSymbols = rowSymbols.slice(i, i + 4);
       if (fourSymbols.every(symbol => symbol === fourSymbols[0])) {
-        const multiplier = fourSymbols[0] === '🦔' ? 10 : // was 15
-                          fourSymbols[0] === '🏍️' ? 5 :  // was 8
-                          fourSymbols[0] === '🏆' ? 3 :   // was 5
-                          2;                               // was 3
+        const multiplier = fourSymbols[0] === '🦔' ? 10 :
+                          fourSymbols[0] === '🏍️' ? 5 :
+                          fourSymbols[0] === '🏆' ? 3 :
+                          2;
         totalWin += betAmount * multiplier;
+        for (let j = 0; j < 4; j++) {
+          winningPositions.add(rowStart + i + j);
+        }
         break;
       }
     }
     
-    // Check 3 in a row (now requires specific symbols)
+    // Check 3 in a row
     for (let i = 0; i <= 2; i++) {
       const threeSymbols = rowSymbols.slice(i, i + 3);
-      // Only special symbols pay for 3 in a row
       if (threeSymbols.every(symbol => symbol === threeSymbols[0]) &&
           ['🦔', '🏍️', '🏆'].includes(threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🦔' ? 5 :  // was 10
-                          threeSymbols[0] === '🏍️' ? 3 :  // was 5
-                          threeSymbols[0] === '🏆' ? 2 : 0; // was 3
-        totalWin += betAmount * multiplier;
+        const multiplier = threeSymbols[0] === '🦔' ? 5 :
+                          threeSymbols[0] === '🏍️' ? 3 :
+                          threeSymbols[0] === '🏆' ? 2 : 0;
+        if (multiplier > 0) {
+          totalWin += betAmount * multiplier;
+          for (let j = 0; j < 3; j++) {
+            winningPositions.add(rowStart + i + j);
+          }
+        }
         break;
       }
     }
@@ -100,43 +112,51 @@ const checkWin = (reels, betAmount) => {
     
     // Check 4 in a column
     if (colSymbols.every(symbol => symbol === colSymbols[0])) {
-      const multiplier = colSymbols[0] === '🦔' ? 12 :   // was 20
-                        colSymbols[0] === '🏍️' ? 6 :    // was 10
-                        colSymbols[0] === '🏆' ? 4 :     // was 6
-                        2;                                // was 4
+      const multiplier = colSymbols[0] === '🦔' ? 12 :
+                        colSymbols[0] === '🏍️' ? 6 :
+                        colSymbols[0] === '🏆' ? 4 :
+                        2;
       totalWin += betAmount * multiplier;
+      for (let i = 0; i < 4; i++) {
+        winningPositions.add(col + (i * GRID_WIDTH));
+      }
       continue;
     }
     
-    // Check 3 in a column (now requires specific symbols)
+    // Check 3 in a column
     for (let i = 0; i <= 1; i++) {
       const threeSymbols = colSymbols.slice(i, i + 3);
-      // Only special symbols pay for 3 in a column
       if (threeSymbols.every(symbol => symbol === threeSymbols[0]) &&
           ['🦔', '🏍️', '🏆'].includes(threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🦔' ? 8 :  // was 12
-                          threeSymbols[0] === '🏍️' ? 4 :  // was 6
-                          threeSymbols[0] === '🏆' ? 2 : 0; // was 4
-        totalWin += betAmount * multiplier;
+        const multiplier = threeSymbols[0] === '🦔' ? 8 :
+                          threeSymbols[0] === '🏍️' ? 4 :
+                          threeSymbols[0] === '🏆' ? 2 : 0;
+        if (multiplier > 0) {
+          totalWin += betAmount * multiplier;
+          for (let j = 0; j < 3; j++) {
+            winningPositions.add(col + ((i + j) * GRID_WIDTH));
+          }
+        }
         break;
       }
     }
   }
 
-  return totalWin;
+  return { totalWin, winningPositions: Array.from(winningPositions) };
 };
 
 const SlotMachine = () => {
   const initialReels = Array(GRID_WIDTH * GRID_HEIGHT).fill('🏍️');
   const [reels, setReels] = useState(initialReels);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [coins, setCoins] = useState(100);
+  const [coins, setCoins] = useState(1000);
   const [betAmount, setBetAmount] = useState(MIN_BET);
   const [lastWin, setLastWin] = useState(0);
   const [hoveredSymbol, setHoveredSymbol] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isMuted, setIsMuted] = useState(getMuteState());
+  const [winningPositions, setWinningPositions] = useState([]);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -169,6 +189,7 @@ const SlotMachine = () => {
     setCoins(prev => prev - betAmount);
     setLastWin(0);
     setHoveredSymbol(null);
+    setWinningPositions([]);
 
     const spinDuration = 2000;
     const intervals = 10;
@@ -189,15 +210,16 @@ const SlotMachine = () => {
         );
         setReels(finalReels);
         
-        const winAmount = checkWin(finalReels, betAmount);
-        if (winAmount > 0) {
-          if (winAmount >= betAmount * 25) {
+        const { totalWin, winningPositions } = checkWin(finalReels, betAmount);
+        if (totalWin > 0) {
+          if (totalWin >= betAmount * 25) {
             playJackpotSound();
           } else {
             playWinSound();
           }
-          setLastWin(winAmount);
-          setCoins(prev => prev + winAmount);
+          setLastWin(totalWin);
+          setCoins(prev => prev + totalWin);
+          setWinningPositions(winningPositions);
         }
       }
     }, spinDuration / intervals);
@@ -212,7 +234,7 @@ const SlotMachine = () => {
         rowElements.push(
           <div 
             key={`${row}-${col}`} 
-            className="reel"
+            className={`reel ${winningPositions.includes(index) ? 'winning' : ''}`}
             onMouseEnter={() => setHoveredSymbol(reels[index])}
             onMouseLeave={() => setHoveredSymbol(null)}
             onMouseMove={handleMouseMove}
