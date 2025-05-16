@@ -24,14 +24,6 @@ const SOUND_PATHS = {
 // Cache for loaded audio buffers
 const audioBuffers = {};
 
-// Check audio format support
-const checkAudioFormat = (format) => {
-  const audio = document.createElement('audio');
-  const canPlay = audio.canPlayType(`audio/${format}`);
-  console.log(`Browser support for ${format}: ${canPlay}`);
-  return canPlay !== '';
-};
-
 // Initialize audio context
 const initAudio = async () => {
   if (!audioContext) {
@@ -112,19 +104,6 @@ const createAudioSource = (buffer, volume = 1, loop = false) => {
   gainNode.connect(audioContext.destination);
   
   return { source, gainNode };
-};
-
-// Schedule the next background music loop with crossfade
-const scheduleNextLoop = (buffer, currentTime, duration) => {
-  const startTime = currentTime + duration - CROSSFADE_DURATION;
-  const { source, gainNode } = createAudioSource(buffer, 0, true);
-  
-  // Fade in the new loop
-  gainNode.gain.setValueAtTime(0, startTime);
-  gainNode.gain.linearRampToValueAtTime(0.3, startTime + CROSSFADE_DURATION);
-  
-  source.start(startTime);
-  return { source, gainNode, startTime };
 };
 
 // Play a sound with optional volume
