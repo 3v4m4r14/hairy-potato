@@ -3,7 +3,6 @@ let audioContext = null;
 let isMuted = false;
 let bgMusicNode = null;
 let nextBgMusicNode = null;
-const CROSSFADE_DURATION = 2; // Crossfade duration in seconds
 
 // Sound effect paths with format fallbacks
 const SOUND_PATHS = {
