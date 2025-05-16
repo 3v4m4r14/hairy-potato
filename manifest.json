@@ -1,6 +1,6 @@
 {
-  "short_name": "Moto Slots",
-  "name": "Moto Slots - Lucky Hedgehog Slot Machine",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ff5722",
-  "background_color": "#1a1a1a"
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }

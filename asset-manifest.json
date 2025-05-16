@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/hairy-potato/static/css/main.1fac6ccb.css",
-    "main.js": "/hairy-potato/static/js/main.696eca65.js",
+    "main.css": "/hairy-potato/static/css/main.25a43d74.css",
+    "main.js": "/hairy-potato/static/js/main.069d9aef.js",
     "static/js/453.3d5eeeeb.chunk.js": "/hairy-potato/static/js/453.3d5eeeeb.chunk.js",
     "index.html": "/hairy-potato/index.html",
-    "main.1fac6ccb.css.map": "/hairy-potato/static/css/main.1fac6ccb.css.map",
-    "main.696eca65.js.map": "/hairy-potato/static/js/main.696eca65.js.map",
+    "main.25a43d74.css.map": "/hairy-potato/static/css/main.25a43d74.css.map",
+    "main.069d9aef.js.map": "/hairy-potato/static/js/main.069d9aef.js.map",
     "453.3d5eeeeb.chunk.js.map": "/hairy-potato/static/js/453.3d5eeeeb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1fac6ccb.css",
-    "static/js/main.696eca65.js"
+    "static/css/main.25a43d74.css",
+    "static/js/main.069d9aef.js"
   ]
 }
