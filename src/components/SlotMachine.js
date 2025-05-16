@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './SlotMachine.css';
 import { playSpinSound, playWinSound, playJackpotSound, toggleMute, getMuteState } from '../utils/audio';
+import GameRulesModal from './GameRulesModal';
 
 // Weighted symbols array - common symbols appear multiple times to increase their frequency
 const SYMBOLS = [
@@ -157,6 +158,7 @@ const SlotMachine = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isMuted, setIsMuted] = useState(getMuteState());
   const [winningPositions, setWinningPositions] = useState([]);
+  const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -309,21 +311,16 @@ const SlotMachine = () => {
       >
         {isSpinning ? 'Revving...' : `Ride! (${betAmount} coins)`}
       </button>
-      <div className="payouts">
-        <div className="jackpot-info">🦔 Lucky Hedgehog Jackpots 🦔</div>
-        <div>7+ Hedgehogs: 500x</div>
-        <div>6 Hedgehogs: 150x</div>
-        <div>5 Hedgehogs: 75x</div>
-        <div>4 Hedgehogs: 25x</div>
-        <div>3 Hedgehogs: 8x</div>
-        <div className="regular-wins">Special Symbol Wins</div>
-        <div>5 Hedgehogs: 15x</div>
-        <div>5 Sport Bikes: 8x</div>
-        <div>5 Trophies: 5x</div>
-        <div>4 in a row: 2-10x</div>
-        <div>3 special symbols: 2-5x</div>
-        <div>4 in column: 2-12x</div>
-      </div>
+      <button 
+        onClick={() => setIsRulesModalOpen(true)}
+        className="rules-button"
+      >
+        📋 Game Rules & Payouts
+      </button>
+      <GameRulesModal 
+        isOpen={isRulesModalOpen}
+        onClose={() => setIsRulesModalOpen(false)}
+      />
     </div>
   );
 };

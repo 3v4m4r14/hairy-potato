@@ -16,7 +16,7 @@ function App() {
           >
             ☕ Buy me a coffee
           </a>
-          <div>© {new Date().getFullYear()} All rights reserved</div>
+          <div>© {new Date().getFullYear()} Eva Maria Veitmaa</div>
         </footer>
       </div>
     </div>

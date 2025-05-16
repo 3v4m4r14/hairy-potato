@@ -74,7 +74,3 @@ npm run build
 If you enjoy this game, you can support the developer:
 
 [Buy Me a Coffee](https://buymeacoffee.com/animatedchaos)
-
-## 📝 License
-
-© ${new Date().getFullYear()} All rights reserved
