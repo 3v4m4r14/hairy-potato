@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/3v4m4r14/hairy-potato/static/css/main.0fb04089.css",
-    "main.js": "/3v4m4r14/hairy-potato/static/js/main.749cd091.js",
+    "main.css": "/3v4m4r14/hairy-potato/static/css/main.ee3440e7.css",
+    "main.js": "/3v4m4r14/hairy-potato/static/js/main.35f58825.js",
     "static/js/453.3d5eeeeb.chunk.js": "/3v4m4r14/hairy-potato/static/js/453.3d5eeeeb.chunk.js",
     "index.html": "/3v4m4r14/hairy-potato/index.html",
-    "main.0fb04089.css.map": "/3v4m4r14/hairy-potato/static/css/main.0fb04089.css.map",
-    "main.749cd091.js.map": "/3v4m4r14/hairy-potato/static/js/main.749cd091.js.map",
+    "main.ee3440e7.css.map": "/3v4m4r14/hairy-potato/static/css/main.ee3440e7.css.map",
+    "main.35f58825.js.map": "/3v4m4r14/hairy-potato/static/js/main.35f58825.js.map",
     "453.3d5eeeeb.chunk.js.map": "/3v4m4r14/hairy-potato/static/js/453.3d5eeeeb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0fb04089.css",
-    "static/js/main.749cd091.js"
+    "static/css/main.ee3440e7.css",
+    "static/js/main.35f58825.js"
   ]
 }
