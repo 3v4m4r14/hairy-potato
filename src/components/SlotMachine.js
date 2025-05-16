@@ -3,13 +3,13 @@ import './SlotMachine.css';
 
 // Weighted symbols array - common symbols appear multiple times to increase their frequency
 const SYMBOLS = [
-  '🏁', '🏁', '🏁', '🏁',  // 4x Checkered Flag (most common)
-  '🔧', '🔧', '🔧', '🔧',  // 4x Tools
-  '☕️', '☕️', '☕️',       // 3x Helmet
-  '🛵', '🛵', '🛵',        // 3x Scooter
-  '🏆', '🏆',              // 2x Trophy
-  '🏍️',                    // 1x Sport Bike (rare)
-  '🦔'                      // 1x Hedgehog (rarest)
+  '🏁', '🏁', '🏁', '🏁', '🏁',  // 5x Checkered Flag (most common)
+  '🔧', '🔧', '🔧', '🔧', '🔧',  // 5x Tools
+  '☕️', '☕️', '☕️', '☕️',       // 4x Coffee
+  '🛵', '🛵', '🛵', '🛵',        // 4x Scooter
+  '🏆', '🏆', '🏆',              // 3x Trophy
+  '🏍️', '🏍️',                   // 2x Sport Bike
+  '🦔'                           // 1x Hedgehog (ultra rare)
 ];
 
 const SYMBOL_VALUES = {
@@ -35,11 +35,11 @@ const checkWin = (reels, betAmount) => {
   if (hedgehogCount >= 3) {
     // Adjusted jackpot multipliers
     const jackpotMultiplier = {
-      3: 25,   // 3 hedgehogs anywhere
-      4: 75,   // 4 hedgehogs anywhere
-      5: 150,  // 5 hedgehogs anywhere
-      6: 300,  // 6 hedgehogs anywhere
-      7: 1000  // 7 or more hedgehogs (super rare jackpot)
+      3: 8,     // was 15
+      4: 25,    // was 40
+      5: 75,    // was 100
+      6: 150,   // was 250
+      7: 500    // was 1000
     };
     const multiplier = jackpotMultiplier[Math.min(7, hedgehogCount)] || 1000;
     totalWin += betAmount * multiplier;
@@ -52,9 +52,10 @@ const checkWin = (reels, betAmount) => {
     
     // Check 5 in a row (now harder to get)
     if (rowSymbols.every(symbol => symbol === rowSymbols[0])) {
-      const multiplier = rowSymbols[0] === '🦔' ? 75 : 
-                        rowSymbols[0] === '🏍️' ? 25 : 
-                        rowSymbols[0] === '🏆' ? 15 : 10;
+      const multiplier = rowSymbols[0] === '🦔' ? 15 :  // was 25
+                        rowSymbols[0] === '🏍️' ? 8 :   // was 10
+                        rowSymbols[0] === '🏆' ? 5 :    // was 8
+                        3;                               // was 5
       totalWin += betAmount * multiplier;
       continue;
     }
@@ -63,9 +64,10 @@ const checkWin = (reels, betAmount) => {
     for (let i = 0; i <= 1; i++) {
       const fourSymbols = rowSymbols.slice(i, i + 4);
       if (fourSymbols.every(symbol => symbol === fourSymbols[0])) {
-        const multiplier = fourSymbols[0] === '🦔' ? 35 :
-                          fourSymbols[0] === '🏍️' ? 15 :
-                          fourSymbols[0] === '🏆' ? 8 : 5;
+        const multiplier = fourSymbols[0] === '🦔' ? 10 : // was 15
+                          fourSymbols[0] === '🏍️' ? 5 :  // was 8
+                          fourSymbols[0] === '🏆' ? 3 :   // was 5
+                          2;                               // was 3
         totalWin += betAmount * multiplier;
         break;
       }
@@ -77,9 +79,9 @@ const checkWin = (reels, betAmount) => {
       // Only special symbols pay for 3 in a row
       if (threeSymbols.every(symbol => symbol === threeSymbols[0]) &&
           ['🦔', '🏍️', '🏆'].includes(threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🦔' ? 20 :
-                          threeSymbols[0] === '🏍️' ? 8 :
-                          threeSymbols[0] === '🏆' ? 5 : 0;
+        const multiplier = threeSymbols[0] === '🦔' ? 5 :  // was 10
+                          threeSymbols[0] === '🏍️' ? 3 :  // was 5
+                          threeSymbols[0] === '🏆' ? 2 : 0; // was 3
         totalWin += betAmount * multiplier;
         break;
       }
@@ -97,9 +99,10 @@ const checkWin = (reels, betAmount) => {
     
     // Check 4 in a column
     if (colSymbols.every(symbol => symbol === colSymbols[0])) {
-      const multiplier = colSymbols[0] === '🦔' ? 50 :
-                        colSymbols[0] === '🏍️' ? 20 :
-                        colSymbols[0] === '🏆' ? 12 : 8;
+      const multiplier = colSymbols[0] === '🦔' ? 12 :   // was 20
+                        colSymbols[0] === '🏍️' ? 6 :    // was 10
+                        colSymbols[0] === '🏆' ? 4 :     // was 6
+                        2;                                // was 4
       totalWin += betAmount * multiplier;
       continue;
     }
@@ -110,9 +113,9 @@ const checkWin = (reels, betAmount) => {
       // Only special symbols pay for 3 in a column
       if (threeSymbols.every(symbol => symbol === threeSymbols[0]) &&
           ['🦔', '🏍️', '🏆'].includes(threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🦔' ? 25 :
-                          threeSymbols[0] === '🏍️' ? 10 :
-                          threeSymbols[0] === '🏆' ? 6 : 0;
+        const multiplier = threeSymbols[0] === '🦔' ? 8 :  // was 12
+                          threeSymbols[0] === '🏍️' ? 4 :  // was 6
+                          threeSymbols[0] === '🏆' ? 2 : 0; // was 4
         totalWin += betAmount * multiplier;
         break;
       }
@@ -269,18 +272,18 @@ const SlotMachine = () => {
       </button>
       <div className="payouts">
         <div className="jackpot-info">🦔 Lucky Hedgehog Jackpots 🦔</div>
-        <div>7+ Hedgehogs: 1000x</div>
-        <div>6 Hedgehogs: 300x</div>
-        <div>5 Hedgehogs: 150x</div>
-        <div>4 Hedgehogs: 75x</div>
-        <div>3 Hedgehogs: 25x</div>
-        <div className="regular-wins">Special Symbol Wins</div>
+        <div>7+ Hedgehogs: 500x</div>
+        <div>6 Hedgehogs: 150x</div>
         <div>5 Hedgehogs: 75x</div>
-        <div>5 Sport Bikes: 25x</div>
-        <div>5 Trophies: 15x</div>
-        <div>4 in a row: 5-15x</div>
-        <div>3 special symbols: 5-8x</div>
-        <div>4 in column: 8-20x</div>
+        <div>4 Hedgehogs: 25x</div>
+        <div>3 Hedgehogs: 8x</div>
+        <div className="regular-wins">Special Symbol Wins</div>
+        <div>5 Hedgehogs: 15x</div>
+        <div>5 Sport Bikes: 8x</div>
+        <div>5 Trophies: 5x</div>
+        <div>4 in a row: 2-10x</div>
+        <div>3 special symbols: 2-5x</div>
+        <div>4 in column: 2-12x</div>
       </div>
     </div>
   );
