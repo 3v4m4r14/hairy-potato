@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/hairy-potato/static/css/main.1b1ee2f5.css",
-    "main.js": "/hairy-potato/static/js/main.71d9a424.js",
-    "static/js/453.3d5eeeeb.chunk.js": "/hairy-potato/static/js/453.3d5eeeeb.chunk.js",
-    "index.html": "/hairy-potato/index.html",
-    "main.1b1ee2f5.css.map": "/hairy-potato/static/css/main.1b1ee2f5.css.map",
-    "main.71d9a424.js.map": "/hairy-potato/static/js/main.71d9a424.js.map",
-    "453.3d5eeeeb.chunk.js.map": "/hairy-potato/static/js/453.3d5eeeeb.chunk.js.map"
+    "main.css": "/motoslots/static/css/main.1b1ee2f5.css",
+    "main.js": "/motoslots/static/js/main.e472129c.js",
+    "static/js/453.3d5eeeeb.chunk.js": "/motoslots/static/js/453.3d5eeeeb.chunk.js",
+    "index.html": "/motoslots/index.html",
+    "main.1b1ee2f5.css.map": "/motoslots/static/css/main.1b1ee2f5.css.map",
+    "main.e472129c.js.map": "/motoslots/static/js/main.e472129c.js.map",
+    "453.3d5eeeeb.chunk.js.map": "/motoslots/static/js/453.3d5eeeeb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1b1ee2f5.css",
-    "static/js/main.71d9a424.js"
+    "static/js/main.e472129c.js"
   ]
 }
