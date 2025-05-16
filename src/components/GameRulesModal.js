@@ -39,7 +39,7 @@ const GameRulesModal = ({ isOpen, onClose }) => {
             <div>5 Hedgehogs in a row</div><div>15x</div>
             <div>5 Sport Bikes in a row</div><div>10x</div>
             <div>5 Trophies in a row</div><div>6x</div>
-            <div>5 other symbols in a row*</div><div>4x</div>
+            <div>5 other symbols in a row</div><div>4x</div>
             <div>4 special symbols in a row*</div><div>4-12x</div>
             <div>3 special symbols in a row*</div><div>2-6x</div>
             <div>4 special symbols in column*</div><div>5-15x</div>
