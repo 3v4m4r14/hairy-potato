@@ -30,20 +30,6 @@
   font-weight: bold;
 }
 
-.win-message {
-  font-size: 1.3rem;
-  color: #ff5722;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  animation: pulse 1s infinite;
-}
-
-.win-message.jackpot {
-  color: #ffd700;
-  font-size: 1.6rem;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
-
 .symbol-tooltip {
   background-color: #333;
   color: #fff;
