@@ -7,8 +7,10 @@ const GameRulesModal = ({ isOpen, onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
-        <h2>🏍️ Game Rules & Payouts</h2>
+        <div className="modal-header">
+          <h2>🏍️ Game Rules & Payouts</h2>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
         
         <div className="rules-section">
           <h3>🎮 How to Play</h3>
