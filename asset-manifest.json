@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/motoslots/static/css/main.2bcd621d.css",
-    "main.js": "/motoslots/static/js/main.1dc7deaa.js",
+    "main.css": "/motoslots/static/css/main.aede91aa.css",
+    "main.js": "/motoslots/static/js/main.35ef616e.js",
     "static/js/453.3d5eeeeb.chunk.js": "/motoslots/static/js/453.3d5eeeeb.chunk.js",
     "index.html": "/motoslots/index.html",
-    "main.2bcd621d.css.map": "/motoslots/static/css/main.2bcd621d.css.map",
-    "main.1dc7deaa.js.map": "/motoslots/static/js/main.1dc7deaa.js.map",
+    "main.aede91aa.css.map": "/motoslots/static/css/main.aede91aa.css.map",
+    "main.35ef616e.js.map": "/motoslots/static/js/main.35ef616e.js.map",
     "453.3d5eeeeb.chunk.js.map": "/motoslots/static/js/453.3d5eeeeb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2bcd621d.css",
-    "static/js/main.1dc7deaa.js"
+    "static/css/main.aede91aa.css",
+    "static/js/main.35ef616e.js"
   ]
 }
