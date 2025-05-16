@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SlotMachine.css';
+import { playSpinSound, playWinSound, playJackpotSound, toggleMute, getMuteState } from '../utils/audio';
 
 // Weighted symbols array - common symbols appear multiple times to increase their frequency
 const SYMBOLS = [
@@ -135,6 +136,7 @@ const SlotMachine = () => {
   const [hoveredSymbol, setHoveredSymbol] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMuted, setIsMuted] = useState(getMuteState());
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -162,6 +164,7 @@ const SlotMachine = () => {
   const spin = () => {
     if (coins < betAmount) return;
     
+    playSpinSound();
     setIsSpinning(true);
     setCoins(prev => prev - betAmount);
     setLastWin(0);
@@ -188,6 +191,11 @@ const SlotMachine = () => {
         
         const winAmount = checkWin(finalReels, betAmount);
         if (winAmount > 0) {
+          if (winAmount >= betAmount * 25) {
+            playJackpotSound();
+          } else {
+            playWinSound();
+          }
           setLastWin(winAmount);
           setCoins(prev => prev + winAmount);
         }
@@ -224,6 +232,14 @@ const SlotMachine = () => {
 
   return (
     <div className="slot-machine">
+      <button 
+        className="mute-button" 
+        onClick={() => {
+          setIsMuted(toggleMute());
+        }}
+      >
+        {isMuted ? '🔇' : '🔊'}
+      </button>
       <div className="title">Moto Slots</div>
       <div className="coins">Coins: {coins}</div>
       <div className="bet-controls">
