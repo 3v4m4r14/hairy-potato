@@ -36,15 +36,14 @@ const checkWin = (reels, betAmount) => {
   // Check for Hedgehog Jackpot patterns
   const hedgehogPositions = reels.map((symbol, index) => symbol === '🦔' ? index : -1).filter(pos => pos !== -1);
   if (hedgehogPositions.length >= 3) {
-    // Adjusted jackpot multipliers
     const jackpotMultiplier = {
-      3: 8,     // was 15
-      4: 25,    // was 40
-      5: 75,    // was 100
-      6: 150,   // was 250
-      7: 500    // was 1000
+      3: 8,     // Adjusted for 90.37% RTP
+      4: 25,
+      5: 80,
+      6: 150,
+      7: 500
     };
-    const multiplier = jackpotMultiplier[Math.min(7, hedgehogPositions.length)] || 1000;
+    const multiplier = jackpotMultiplier[Math.min(7, hedgehogPositions.length)] || 500;
     totalWin += betAmount * multiplier;
     hedgehogPositions.forEach(pos => winningPositions.add(pos));
   }
@@ -56,10 +55,9 @@ const checkWin = (reels, betAmount) => {
     
     // Check 5 in a row
     if (rowSymbols.every(symbol => symbol === rowSymbols[0])) {
-      const multiplier = rowSymbols[0] === '🦔' ? 15 :
-                        rowSymbols[0] === '🏍️' ? 8 :
-                        rowSymbols[0] === '🏆' ? 5 :
-                        3;
+      const multiplier = rowSymbols[0] === '🦔' ? 15 : 
+                        rowSymbols[0] === '🏍️' ? 10 : 
+                        rowSymbols[0] === '🏆' ? 6 : 4;
       totalWin += betAmount * multiplier;
       for (let i = 0; i < GRID_WIDTH; i++) {
         winningPositions.add(rowStart + i);
@@ -71,10 +69,9 @@ const checkWin = (reels, betAmount) => {
     for (let i = 0; i <= 1; i++) {
       const fourSymbols = rowSymbols.slice(i, i + 4);
       if (fourSymbols.every(symbol => symbol === fourSymbols[0])) {
-        const multiplier = fourSymbols[0] === '🦔' ? 10 :
-                          fourSymbols[0] === '🏍️' ? 5 :
-                          fourSymbols[0] === '🏆' ? 3 :
-                          2;
+        const multiplier = fourSymbols[0] === '🦔' ? 12 :
+                          fourSymbols[0] === '🏍️' ? 6 :
+                          fourSymbols[0] === '🏆' ? 4 : 2;
         totalWin += betAmount * multiplier;
         for (let j = 0; j < 4; j++) {
           winningPositions.add(rowStart + i + j);
@@ -88,8 +85,8 @@ const checkWin = (reels, betAmount) => {
       const threeSymbols = rowSymbols.slice(i, i + 3);
       if (threeSymbols.every(symbol => symbol === threeSymbols[0]) &&
           ['🦔', '🏍️', '🏆'].includes(threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🦔' ? 5 :
-                          threeSymbols[0] === '🏍️' ? 3 :
+        const multiplier = threeSymbols[0] === '🦔' ? 6 :
+                          threeSymbols[0] === '🏍️' ? 4 :
                           threeSymbols[0] === '🏆' ? 2 : 0;
         if (multiplier > 0) {
           totalWin += betAmount * multiplier;
@@ -113,10 +110,9 @@ const checkWin = (reels, betAmount) => {
     
     // Check 4 in a column
     if (colSymbols.every(symbol => symbol === colSymbols[0])) {
-      const multiplier = colSymbols[0] === '🦔' ? 12 :
-                        colSymbols[0] === '🏍️' ? 6 :
-                        colSymbols[0] === '🏆' ? 4 :
-                        2;
+      const multiplier = colSymbols[0] === '🦔' ? 15 :
+                        colSymbols[0] === '🏍️' ? 8 :
+                        colSymbols[0] === '🏆' ? 5 : 2;
       totalWin += betAmount * multiplier;
       for (let i = 0; i < 4; i++) {
         winningPositions.add(col + (i * GRID_WIDTH));
@@ -129,8 +125,8 @@ const checkWin = (reels, betAmount) => {
       const threeSymbols = colSymbols.slice(i, i + 3);
       if (threeSymbols.every(symbol => symbol === threeSymbols[0]) &&
           ['🦔', '🏍️', '🏆'].includes(threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🦔' ? 8 :
-                          threeSymbols[0] === '🏍️' ? 4 :
+        const multiplier = threeSymbols[0] === '🦔' ? 10 :
+                          threeSymbols[0] === '🏍️' ? 5 :
                           threeSymbols[0] === '🏆' ? 2 : 0;
         if (multiplier > 0) {
           totalWin += betAmount * multiplier;

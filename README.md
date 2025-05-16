@@ -16,20 +16,20 @@ A motorcycle-themed slot machine game built with React. Spin the reels and try y
 ### 🦔 Lucky Hedgehog Jackpots
 - 7+ Hedgehogs: 500x
 - 6 Hedgehogs: 150x
-- 5 Hedgehogs: 75x
+- 5 Hedgehogs: 80x
 - 4 Hedgehogs: 25x
 - 3 Hedgehogs: 8x
 
 ### Special Symbol Wins
 - 5 Hedgehogs in a row: 15x
-- 5 Sport Bikes in a row: 8x
-- 5 Trophies in a row: 5x
-- 4 in a row: 2-10x
-- 3 special symbols: 2-5x
-- 4 in column: 2-12x
+- 5 Sport Bikes in a row: 10x
+- 5 Trophies in a row: 6x
+- 4 in a row: 2-12x
+- 3 special symbols: 2-6x
+- 4 in column: 2-15x
 
 ### 🎲 Game Statistics
-- Return to Player (RTP): 87.92%
+- Return to Player (RTP): 90.37%
 - Hedgehog Symbol Rarity: 1/24 (4.17%)
 - Grid Size: 5x4 (20 positions)
 - Bet Range: 10-50 coins
