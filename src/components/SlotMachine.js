@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './SlotMachine.css';
 
-const SYMBOLS = ['🏍️', '🛵', '⛑️', '🏆', '🔧', '🏁'];
+const SYMBOLS = ['🦔', '🏍️', '🛵', '⛑️', '🏆', '🔧', '🏁'];
 const SYMBOL_VALUES = {
+  '🦔': 'Lucky Hedgehog (Jackpot)',
   '🏍️': 'Sport Bike',
   '🛵': 'Scooter',
   '⛑️': 'Helmet',
@@ -19,6 +20,21 @@ const GRID_HEIGHT = 4;
 const checkWin = (reels, betAmount) => {
   let totalWin = 0;
 
+  // Check for Hedgehog Jackpot patterns
+  const hedgehogCount = reels.filter(symbol => symbol === '🦔').length;
+  if (hedgehogCount >= 3) {
+    // Progressive jackpot based on number of hedgehogs
+    const jackpotMultiplier = {
+      3: 20,  // 3 hedgehogs anywhere
+      4: 50,  // 4 hedgehogs anywhere
+      5: 100, // 5 hedgehogs anywhere
+      6: 200, // 6 hedgehogs anywhere
+      7: 500  // 7 or more hedgehogs
+    };
+    const multiplier = jackpotMultiplier[Math.min(7, hedgehogCount)] || 500;
+    totalWin += betAmount * multiplier;
+  }
+
   // Check horizontal lines
   for (let row = 0; row < GRID_HEIGHT; row++) {
     const rowStart = row * GRID_WIDTH;
@@ -26,8 +42,8 @@ const checkWin = (reels, betAmount) => {
     
     // Check 5 in a row
     if (rowSymbols.every(symbol => symbol === rowSymbols[0])) {
-      // Sport Bike pays extra
-      const multiplier = rowSymbols[0] === '🏍️' ? 15 : 10;
+      const multiplier = rowSymbols[0] === '🦔' ? 50 : 
+                        rowSymbols[0] === '🏍️' ? 15 : 10;
       totalWin += betAmount * multiplier;
       continue;
     }
@@ -36,7 +52,8 @@ const checkWin = (reels, betAmount) => {
     for (let i = 0; i <= 1; i++) {
       const fourSymbols = rowSymbols.slice(i, i + 4);
       if (fourSymbols.every(symbol => symbol === fourSymbols[0])) {
-        const multiplier = fourSymbols[0] === '🏍️' ? 8 : 5;
+        const multiplier = fourSymbols[0] === '🦔' ? 25 :
+                          fourSymbols[0] === '🏍️' ? 8 : 5;
         totalWin += betAmount * multiplier;
         break;
       }
@@ -46,7 +63,8 @@ const checkWin = (reels, betAmount) => {
     for (let i = 0; i <= 2; i++) {
       const threeSymbols = rowSymbols.slice(i, i + 3);
       if (threeSymbols.every(symbol => symbol === threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🏍️' ? 5 : 3;
+        const multiplier = threeSymbols[0] === '🦔' ? 15 :
+                          threeSymbols[0] === '🏍️' ? 5 : 3;
         totalWin += betAmount * multiplier;
         break;
       }
@@ -64,7 +82,8 @@ const checkWin = (reels, betAmount) => {
     
     // Check 4 in a column
     if (colSymbols.every(symbol => symbol === colSymbols[0])) {
-      const multiplier = colSymbols[0] === '🏍️' ? 12 : 8;
+      const multiplier = colSymbols[0] === '🦔' ? 40 :
+                        colSymbols[0] === '🏍️' ? 12 : 8;
       totalWin += betAmount * multiplier;
       continue;
     }
@@ -73,7 +92,8 @@ const checkWin = (reels, betAmount) => {
     for (let i = 0; i <= 1; i++) {
       const threeSymbols = colSymbols.slice(i, i + 3);
       if (threeSymbols.every(symbol => symbol === threeSymbols[0])) {
-        const multiplier = threeSymbols[0] === '🏍️' ? 6 : 4;
+        const multiplier = threeSymbols[0] === '🦔' ? 20 :
+                          threeSymbols[0] === '🏍️' ? 6 : 4;
         totalWin += betAmount * multiplier;
         break;
       }
@@ -91,6 +111,26 @@ const SlotMachine = () => {
   const [betAmount, setBetAmount] = useState(MIN_BET);
   const [lastWin, setLastWin] = useState(0);
   const [hoveredSymbol, setHoveredSymbol] = useState(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleMouseMove = (e) => {
+    if (!isMobile) {
+      setTooltipPosition({
+        x: e.clientX + 10,
+        y: e.clientY + 10
+      });
+    }
+  };
 
   const adjustBet = (amount) => {
     const newBet = Math.max(MIN_BET, Math.min(MAX_BET, betAmount + amount));
@@ -145,6 +185,7 @@ const SlotMachine = () => {
             className="reel"
             onMouseEnter={() => setHoveredSymbol(reels[index])}
             onMouseLeave={() => setHoveredSymbol(null)}
+            onMouseMove={handleMouseMove}
           >
             {reels[index]}
           </div>
@@ -163,9 +204,20 @@ const SlotMachine = () => {
     <div className="slot-machine">
       <div className="title">Moto Slots</div>
       <div className="coins">Coins: {coins}</div>
-      {lastWin > 0 && <div className="win-message">You won {lastWin} coins! 🏆</div>}
+      {lastWin > 0 && (
+        <div className={`win-message ${lastWin >= betAmount * 20 ? 'jackpot' : ''}`}>
+          {lastWin >= betAmount * 20 ? '🎉 JACKPOT! ' : ''}
+          You won {lastWin} coins! {lastWin >= betAmount * 20 ? '🦔' : '🏆'}
+        </div>
+      )}
       {hoveredSymbol && (
-        <div className="symbol-tooltip">
+        <div 
+          className="symbol-tooltip"
+          style={!isMobile ? {
+            left: `${tooltipPosition.x}px`,
+            top: `${tooltipPosition.y}px`
+          } : undefined}
+        >
           {SYMBOL_VALUES[hoveredSymbol]}
         </div>
       )}
@@ -189,14 +241,6 @@ const SlotMachine = () => {
       <div className="reels-container">
         {renderGrid()}
       </div>
-      <div className="payouts">
-        <div>5x Sport Bikes: 15x</div>
-        <div>4x Sport Bikes: 8x</div>
-        <div>5 in a row: 10x</div>
-        <div>4 in a row: 5x</div>
-        <div>4 in column: 8x</div>
-        <div>3 in column: 4x</div>
-      </div>
       <button 
         onClick={spin} 
         disabled={isSpinning || coins < betAmount}
@@ -204,6 +248,21 @@ const SlotMachine = () => {
       >
         {isSpinning ? 'Revving...' : `Ride! (${betAmount} coins)`}
       </button>
+      <div className="payouts">
+        <div className="jackpot-info">🦔 Lucky Hedgehog Jackpots 🦔</div>
+        <div>7+ Hedgehogs: 500x</div>
+        <div>6 Hedgehogs: 200x</div>
+        <div>5 Hedgehogs: 100x</div>
+        <div>4 Hedgehogs: 50x</div>
+        <div>3 Hedgehogs: 20x</div>
+        <div className="regular-wins">Regular Wins</div>
+        <div>5x Sport Bikes: 15x</div>
+        <div>4x Sport Bikes: 8x</div>
+        <div>5 in a row: 10x</div>
+        <div>4 in a row: 5x</div>
+        <div>4 in column: 8x</div>
+        <div>3 in column: 4x</div>
+      </div>
     </div>
   );
 };

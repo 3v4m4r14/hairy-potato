@@ -35,14 +35,36 @@
   animation: pulse 1s infinite;
 }
 
+.win-message.jackpot {
+  color: #ffd700;
+  font-size: 1.6rem;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
 .symbol-tooltip {
   background-color: #333;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  margin-bottom: 1rem;
   font-size: 1rem;
   border: 1px solid #ff5722;
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .symbol-tooltip {
+    position: static;
+    margin: 1rem auto;
+    text-align: center;
+    order: 999;
+  }
+
+  .slot-machine {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @keyframes pulse {
@@ -139,6 +161,27 @@
   border: 1px solid #ff5722;
 }
 
+.jackpot-info {
+  grid-column: 1 / -1;
+  color: #ffd700;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #ffd700;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.regular-wins {
+  grid-column: 1 / -1;
+  color: #ff5722;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #ff5722;
+}
+
 .payouts div {
   color: #ffc107;
   font-size: 0.9rem;
@@ -157,6 +200,7 @@
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1px;
+  margin-bottom: 2rem;
 }
 
 .spin-button:hover:not(:disabled) {
