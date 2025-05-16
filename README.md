@@ -1,6 +1,6 @@
 # 🏍️ Moto Slots
 
-A motorcycle-themed slot machine game built with React. Spin the reels and try your luck with motorcycles, helmets, and other bike-related symbols!
+A motorcycle-themed slot machine game built with React. Spin the reels and try your luck with motorcycles and other bike-related symbols!
 
 ## 🎰 Game Features
 
@@ -20,19 +20,38 @@ A motorcycle-themed slot machine game built with React. Spin the reels and try y
 - 4 Hedgehogs: 25x
 - 3 Hedgehogs: 8x
 
-### Special Symbol Wins
-- 5 Hedgehogs in a row: 15x
-- 5 Sport Bikes in a row: 10x
-- 5 Trophies in a row: 6x
-- 4 in a row: 2-12x
-- 3 special symbols: 2-6x
-- 4 in column: 2-15x
+### Horizontal Line Wins
+- 5 matching symbols:
+  - Hedgehog: 15x
+  - Sport Bike: 10x
+  - Trophy: 6x
+  - Other symbols: 4x
+- 4 matching symbols (2-12x multiplier):
+  - Hedgehog: 12x
+  - Sport Bike: 6x
+  - Trophy: 4x
+  - Other symbols: 2x
+- 3 matching special symbols:
+  - Hedgehog: 6x
+  - Sport Bike: 4x
+  - Trophy: 2x
+
+### Vertical Line Wins
+- 4 matching symbols in a column:
+  - Hedgehog: 15x
+  - Sport Bike: 8x
+  - Trophy: 5x
+  - Other symbols: 2x
+- 3 matching special symbols in a column:
+  - Hedgehog: 10x
+  - Sport Bike: 5x
+  - Trophy: 2x
 
 ### 🎲 Game Statistics
 - Return to Player (RTP): 90.37%
 - Hedgehog Symbol Rarity: 1/24 (4.17%)
 - Grid Size: 5x4 (20 positions)
-- Bet Range: 10-50 coins
+- Bet Range: 10-100 coins
 
 ## 🎮 How to Play
 

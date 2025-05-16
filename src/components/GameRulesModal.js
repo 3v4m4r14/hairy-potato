@@ -39,9 +39,14 @@ const GameRulesModal = ({ isOpen, onClose }) => {
             <div>5 Hedgehogs in a row</div><div>15x</div>
             <div>5 Sport Bikes in a row</div><div>10x</div>
             <div>5 Trophies in a row</div><div>6x</div>
-            <div>4 in a row</div><div>2-12x</div>
-            <div>3 special symbols</div><div>2-6x</div>
-            <div>4 in column</div><div>2-15x</div>
+            <div>5 other symbols in a row*</div><div>4x</div>
+            <div>4 special symbols in a row*</div><div>4-12x</div>
+            <div>3 special symbols in a row*</div><div>2-6x</div>
+            <div>4 special symbols in column*</div><div>5-15x</div>
+            <div>3 special symbols in column*</div><div>2-10x</div>
+          </div>
+          <div style={{ fontSize: '0.8em', marginTop: '0.5rem', color: '#ffc107' }}>
+            *Special symbols: Hedgehog (rarest), Sport Bike, Trophy
           </div>
         </div>
 
@@ -51,7 +56,7 @@ const GameRulesModal = ({ isOpen, onClose }) => {
             <li>Return to Player (RTP): 90.37%</li>
             <li>Hedgehog Symbol Rarity: 1/24 (4.17%)</li>
             <li>Grid Size: 5x4 (20 positions)</li>
-            <li>Bet Range: 10-50 coins</li>
+            <li>Bet Range: 10-100 coins</li>
           </ul>
         </div>
       </div>
