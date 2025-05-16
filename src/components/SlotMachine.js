@@ -5,7 +5,7 @@ import './SlotMachine.css';
 const SYMBOLS = [
   '🏁', '🏁', '🏁', '🏁',  // 4x Checkered Flag (most common)
   '🔧', '🔧', '🔧', '🔧',  // 4x Tools
-  '⛑️', '⛑️', '⛑️',       // 3x Helmet
+  '☕️', '☕️', '☕️',       // 3x Helmet
   '🛵', '🛵', '🛵',        // 3x Scooter
   '🏆', '🏆',              // 2x Trophy
   '🏍️',                    // 1x Sport Bike (rare)
@@ -16,7 +16,7 @@ const SYMBOL_VALUES = {
   '🦔': 'Lucky Hedgehog (Jackpot)',
   '🏍️': 'Sport Bike',
   '🛵': 'Scooter',
-  '⛑️': 'Helmet',
+  '☕️': 'Coffee',
   '🏆': 'Trophy',
   '🔧': 'Tools',
   '🏁': 'Checkered Flag'

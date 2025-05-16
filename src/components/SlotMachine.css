@@ -2,28 +2,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem;
   background-color: #1a1a1a;
   border-radius: 1rem;
   box-shadow: 0 0 20px rgba(255, 87, 34, 0.3);
   max-width: 700px;
-  margin: 2rem auto;
+  width: 95%;
+  margin: 1rem auto;
   border: 2px solid #ff5722;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #ff5722;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   font-weight: bold;
   text-transform: uppercase;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .coins {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #ffc107;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   font-weight: bold;
 }
 
@@ -76,21 +77,23 @@
 .bet-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   margin-bottom: 1rem;
+  width: 100%;
+  justify-content: center;
 }
 
 .bet-amount {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #ffc107;
-  min-width: 100px;
+  min-width: 80px;
   font-weight: bold;
 }
 
 .bet-button {
-  width: 40px;
-  height: 40px;
-  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
   background-color: #ff5722;
   color: white;
   border: none;
@@ -113,12 +116,13 @@
 
 .reels-container {
   background-color: #333;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
   border: 1px solid #ff5722;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .win-message-overlay {
@@ -128,15 +132,17 @@
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.8);
   color: #ff5722;
-  padding: 1rem 2rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
   text-align: center;
   animation: fadeInScale 0.5s ease-out;
   border: 2px solid #ff5722;
   box-shadow: 0 0 20px rgba(255, 87, 34, 0.3);
   z-index: 10;
+  width: 90%;
+  max-width: 300px;
 }
 
 .win-message-overlay.jackpot {
@@ -176,8 +182,9 @@
 
 .reel-row {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+  justify-content: center;
 }
 
 .reel-row:last-child {
@@ -185,14 +192,14 @@
 }
 
 .reel {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: #222;
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
   border: 1px solid #444;
   transition: transform 0.2s, border-color 0.2s;
@@ -206,14 +213,16 @@
 
 .payouts {
   background-color: #333;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
   text-align: center;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+  gap: 0.25rem;
   border: 1px solid #ff5722;
+  width: 100%;
+  font-size: 0.9rem;
 }
 
 .jackpot-info {
@@ -269,4 +278,61 @@
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+
+/* Larger screen styles */
+@media (min-width: 768px) {
+  .slot-machine {
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+
+  .reel {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+  }
+
+  .reel-row {
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .reels-container {
+    padding: 1rem;
+  }
+
+  .bet-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .bet-controls {
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .coins {
+    font-size: 1.5rem;
+  }
+
+  .bet-amount {
+    font-size: 1.2rem;
+    min-width: 100px;
+  }
+
+  .win-message-overlay {
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+  }
+
+  .payouts {
+    padding: 1rem;
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
 } 
