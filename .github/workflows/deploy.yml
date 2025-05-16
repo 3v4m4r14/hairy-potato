@@ -4,9 +4,6 @@ on:
   push:
     branches: [main, master]  # Trigger on pushes to main/master
 
-permissions:
-  contents: write
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
