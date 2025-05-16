@@ -117,6 +117,61 @@
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
   border: 1px solid #ff5722;
+  position: relative;
+  overflow: hidden;
+}
+
+.win-message-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ff5722;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeInScale 0.5s ease-out;
+  border: 2px solid #ff5722;
+  box-shadow: 0 0 20px rgba(255, 87, 34, 0.3);
+  z-index: 10;
+}
+
+.win-message-overlay.jackpot {
+  color: #ffd700;
+  font-size: 1.6rem;
+  border-color: #ffd700;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  animation: jackpotPulse 1s infinite;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes jackpotPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  }
 }
 
 .reel-row {
