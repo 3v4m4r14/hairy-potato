@@ -234,8 +234,9 @@ const SlotMachine = () => {
     <div className="slot-machine">
       <button 
         className="mute-button" 
-        onClick={() => {
-          setIsMuted(toggleMute());
+        onClick={async () => {
+          const newMuteState = await toggleMute();
+          setIsMuted(newMuteState);
         }}
       >
         {isMuted ? '🔇' : '🔊'}

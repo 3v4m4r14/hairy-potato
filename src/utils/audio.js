@@ -168,7 +168,7 @@ export const playBackgroundMusic = async (volume = 0.3) => {
   if (isMuted) return;
 
   // Don't start if already playing
-  if (bgMusicNode && bgMusicNode.source.playbackState !== 'finished') {
+  if (bgMusicNode?.source?.playbackState !== 'finished' && bgMusicNode?.source) {
     console.log('Background music is already playing');
     return;
   }
@@ -187,7 +187,7 @@ export const playBackgroundMusic = async (volume = 0.3) => {
     }
 
     // Stop any existing music before starting new
-    if (bgMusicNode) {
+    if (bgMusicNode?.source) {
       try {
         bgMusicNode.source.stop();
         bgMusicNode.source.disconnect();
@@ -212,19 +212,40 @@ export const playBackgroundMusic = async (volume = 0.3) => {
 
 // Stop background music
 export const stopBackgroundMusic = () => {
-  if (bgMusicNode) {
+  if (bgMusicNode?.source) {
     try {
       const fadeOutDuration = 1; // 1 second fade out
       const currentTime = audioContext.currentTime;
+      const { source, gainNode } = bgMusicNode;
       
       // Fade out current music
-      bgMusicNode.gainNode.gain.linearRampToValueAtTime(0, currentTime + fadeOutDuration);
-      setTimeout(() => bgMusicNode.source.stop(), fadeOutDuration * 1000);
+      gainNode.gain.linearRampToValueAtTime(0, currentTime + fadeOutDuration);
+      
+      // Store the cleanup in a timeout
+      setTimeout(() => {
+        try {
+          source.stop();
+          source.disconnect();
+          gainNode.disconnect();
+        } catch (error) {
+          console.warn('Error cleaning up audio source:', error);
+        }
+      }, fadeOutDuration * 1000);
       
       // Fade out next scheduled music if it exists
-      if (nextBgMusicNode) {
-        nextBgMusicNode.gainNode.gain.linearRampToValueAtTime(0, currentTime + fadeOutDuration);
-        setTimeout(() => nextBgMusicNode.source.stop(), fadeOutDuration * 1000);
+      if (nextBgMusicNode?.source) {
+        const nextSource = nextBgMusicNode.source;
+        const nextGain = nextBgMusicNode.gainNode;
+        nextGain.gain.linearRampToValueAtTime(0, currentTime + fadeOutDuration);
+        setTimeout(() => {
+          try {
+            nextSource.stop();
+            nextSource.disconnect();
+            nextGain.disconnect();
+          } catch (error) {
+            console.warn('Error cleaning up next audio source:', error);
+          }
+        }, fadeOutDuration * 1000);
         nextBgMusicNode = null;
       }
     } catch (error) {
